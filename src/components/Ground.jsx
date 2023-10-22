@@ -42,7 +42,7 @@ const Ground = () => {
         }
       }}
     >
-      <circleBufferGeometry args={[20, 200]} />
+      <circleBufferGeometry args={[10, 200]} />
       <meshStandardMaterial attach={"material"} map={groundTexture} />
     </mesh>
   );

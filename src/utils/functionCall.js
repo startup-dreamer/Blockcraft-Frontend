@@ -202,7 +202,7 @@ export const mintLevel = async (signer) => {
   console.log(receipt);
 };
 export const fetchLevel = async (signer) => {
-  const account = await signer.getAddress();
+  const account = signer.getAddress();
   const contract = new ethers.Contract(
     LEVEL_CONTRACT_ADDRESS,
     LEVEL_ABI,

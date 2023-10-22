@@ -2,6 +2,7 @@ import diamond_block from "./diamond_block.png";
 import glass from "./glass.png";
 import grass_block_side from "./grass_block_side.png";
 import grass_block_top from "./grass_top_green.png";
+import grass_block_top1 from "./grass_top_green1.png";
 import leaves from "./leaves.png";
 import oak_log_top from "./oak_log_top.png";
 import oak_log from "./oak_log.png";
@@ -19,5 +20,5 @@ export {
   quartz,
   stone,
   leaves,
-  wood,
+  wood, grass_block_top1
 };

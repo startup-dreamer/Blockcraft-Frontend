@@ -12,6 +12,7 @@ import bagPackIcon from "./bagPackIcon.svg";
 import saveIcon from "./saveIcon.svg";
 import levelsIcon from "./levelsIcon.svg";
 import globeIcon from "./globeIcon.svg";
+import settingIcon from "./settingIcon.png";
 
 export {
   landImg,
@@ -27,5 +28,5 @@ export {
   bagPackIcon,
   saveIcon,
   levelsIcon,
-  globeIcon
+  globeIcon, settingIcon
 };

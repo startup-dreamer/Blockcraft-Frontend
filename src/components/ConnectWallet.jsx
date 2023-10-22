@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { bagPixel, profileIcon } from "../assets";
-import { SismoConnectButton } from "@sismo-core/sismo-connect-react";
+import { useStore } from "../hooks/useStore";
 
 const ConnectWallet = () => {
+  const [setSismo] = useStore((state) => [state.setSismo]);
   const {
     enableWeb3,
     isWeb3Enabled,
@@ -47,6 +48,7 @@ const ConnectWallet = () => {
           className="btn hover:scale-[102%]"
           onClick={async () => {
             await enableWeb3();
+            setSismo(true);
             if (typeof window !== "undefined") {
               window.localStorage.setItem("connected", "injected");
             }

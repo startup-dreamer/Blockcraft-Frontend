@@ -30,6 +30,8 @@ const Header = ({ isHome }) => {
     infoBar,
     setInfoBar,
     activeConfig,
+    sismo,
+    setSismo,
   ] = useStore((state) => [
     state.cubes,
     state.items,
@@ -43,6 +45,8 @@ const Header = ({ isHome }) => {
     state.infoBar,
     state.setInfoBar,
     state.activeConfig,
+    state.sismo,
+    state.setSismo,
   ]);
 
   const saveGameData = async () => {
@@ -82,7 +86,7 @@ const Header = ({ isHome }) => {
             />
           )}
           {!isHome && <SwitchModal />}
-          <SismoConnect />
+          {sismo && !isHome && <SismoConnect />}
           {!isHome ? (
             <div
               // onClick={() => setInfoBar(!infoBar)}

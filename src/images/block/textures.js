@@ -9,7 +9,7 @@ import {
   quartz,
   stone,
   leaves,
-  wood,
+  wood, grass_block_top1
 } from "./images";
 
 const diamond_block_texture = new TextureLoader().load(diamond_block);
@@ -22,7 +22,7 @@ const quartz_texture = new TextureLoader().load(quartz);
 const stone_texture = new TextureLoader().load(stone);
 const leaves_texture = new TextureLoader().load(leaves);
 const wood_texture = new TextureLoader().load(wood);
-const groundTexture = new TextureLoader().load(grass_block_top);
+const groundTexture = new TextureLoader().load(grass_block_top1);
 
 diamond_block_texture.magFilter = NearestFilter;
 glass_texture.magFilter = NearestFilter;

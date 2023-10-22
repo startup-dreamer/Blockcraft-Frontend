@@ -195,7 +195,7 @@ const TextureSelector = () => {
       console.log(error);
     }
   };
-
+  console.log(cubes);
   const verifyLevel = async () => {
     setLoader(true);
     const res = compare(cubes, targetCubes);

@@ -107,6 +107,9 @@ export const useStore = create((set) => ({
         NFTData: [...data],
       }));
     }
+  }, sismo: false,
+  setSismo: (toggle) => {
+    set(() => ({ sismo: toggle }));
   },
   activeConfig: "e",
   setActiveConfig: (toggle) => {
@@ -131,6 +134,7 @@ export const useStore = create((set) => ({
   setInventoryBar: (toggle) => {
     set(() => ({ inventoryBar: toggle }));
   },
+
   settingMenu: false,
   setSettingMenu: (toggle) => {
     set(() => ({ settingMenu: toggle }));

@@ -7,7 +7,13 @@ import {
   fetchLevel,
 } from "../utils/functionCall";
 import { Header, Loader } from "../components";
-import { bgImg, blockCraftName, landImg, landsImg } from "../assets";
+import {
+  bgImg,
+  blockCraftName,
+  landImg,
+  landsImg,
+  settingIcon,
+} from "../assets";
 import ConnectWallet from "../components/ConnectWallet";
 import { useStore } from "../hooks/useStore";
 
@@ -220,7 +226,7 @@ const Home = () => {
             <div className="img-container w-[200px] h-[200px] make-flex">
               <img src={landImg} className="" />
             </div>
-            <h2 className="text-lg">Create Space</h2>
+            <h2 className="text-lg">Enter game</h2>
           </div>
           <div
             onClick={() => fetchWorld()}
@@ -229,14 +235,14 @@ const Home = () => {
             <div className="img-container w-[200px] h-[200px] make-flex">
               <img src={landsImg} className="" />
             </div>
-            <h2 className="text-lg">Load Space</h2>
+            <h2 className="text-lg">Load game</h2>
           </div>
           <div
             onClick={() => setControlMenu(true)}
             className="make-flex flex-col card-container gap-2 w-[280px] h-[280px] hover:scale-105 text-base"
           >
             <div className="img-container w-[200px] h-[200px] make-flex">
-              <img src={landImg} className="" />
+              <img src={settingIcon} className="" />
             </div>
             <h2 className="text-lg">Game Settings</h2>
           </div>
