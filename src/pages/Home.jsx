@@ -101,7 +101,7 @@ const Home = () => {
                   type="text"
                   value={worldName}
                   onChange={(e) => setWorldName(e.target.value)}
-                  className="border-2 mt-1 border-black w-full px-1 text-xl h-10 rounded-md font-vt"
+                  className="border-2 mt-1 border-black w-full px-1 text-xl text-black h-10 rounded-md font-vt"
                 />
               </div>
               <div className="w-full">
@@ -109,7 +109,7 @@ const Home = () => {
                 <textarea
                   value={worldDescription}
                   onChange={(e) => setWorldDescription(e.target.value)}
-                  className="border-2 mt-1 border-black w-full px-1 text-xl h-20 rounded-md font-vt"
+                  className="border-2 mt-1 border-black w-full px-1 text-xl text-black h-20 rounded-md font-vt"
                 />
               </div>
               <button
