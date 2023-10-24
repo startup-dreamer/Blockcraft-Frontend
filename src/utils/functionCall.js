@@ -48,7 +48,7 @@ export const fetchGameData = async (signer) => {
   );
   try {
     const res1 = await contract.getOwnerWorldIds(account);
-    console.log(res1);
+    // console.log(res1);
     const res = await contract.fetchMetadata(account);
     let data = [];
     res.forEach((item) => {
@@ -209,22 +209,49 @@ export const fetchLevel = async (signer) => {
     signer
   );
   const tx = await contract.getOwnerLevelId(account);
+  console.log("level completed: " + Number(tx._hex))
   return Number(tx._hex)
 };
 
+function getUniqueCoordinates(dataArray) {
+  const seenCoordinates = new Set();
+  const uniqueData = [];
 
-function compareObjects(obj1, obj2) {
+  for (const item of dataArray) {
+    const coordinates = JSON.stringify(item.pos);
+
+    if (!seenCoordinates.has(coordinates)) {
+      seenCoordinates.add(coordinates);
+      uniqueData.push(item);
+    }
+  }
+
+  return uniqueData;
+}
+
+function compareElements(element1, element2) {
   return (
-    obj1.pos.toString() === obj2.pos.toString() &&
-    obj1.texture === obj2.texture
+    JSON.stringify(element1.pos) === JSON.stringify(element2.pos) &&
+    element1.texture === element2.texture
   );
 }
 
-export const compare = (data1, data2) => {
+// Check if any element in data matches any element in data2
+// export const compare = data1.some((element1) =>
+//   data2.some((element2) => compareElements(element1, element2))
+// );
+
+export const compare = (dataA, dataB) => {
+
+  let data1 = getUniqueCoordinates(dataA);
+  let data2 = getUniqueCoordinates(dataB)
+  console.log(data1, data2)
   if (data1 && data2) {
     if (data1.length == data2.length) {
 
-      return data1.every((item, index) => compareObjects(item, data2[index]))
+      return data1.some((element1) =>
+        data2.some((element2) => compareElements(element1, element2))
+      )
     }
     return false;
   }

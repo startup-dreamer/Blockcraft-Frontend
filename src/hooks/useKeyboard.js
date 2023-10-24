@@ -6,6 +6,7 @@ function actionByKey(key) {
     KeyS: "moveBackward",
     KeyA: "moveLeft",
     KeyD: "moveRight",
+    keyP: "profileMenu",
     Space: "jump",
     Digit1: "grass",
     Digit2: "tree",
@@ -19,7 +20,7 @@ function actionByKey(key) {
     KeyE: "settings",
     KeyB: "buyMenu",
     KeyI: "infoMenu",
-    keyZ: "toggleSwitch"
+    // keyT: "saveBtn",
   };
   return keyActionMap[key];
 }
@@ -39,11 +40,12 @@ export const useKeyboard = () => {
     quartz: false,
     stone: false,
     chatMenu: false,
+    saveBtn: false,
     inventory: false,
     settings: false,
     buyMenu: false,
     infoMenu: false,
-    toggleSwitch: false
+    profileMenu: false
   });
 
   const handleKeyDown = useCallback((e) => {

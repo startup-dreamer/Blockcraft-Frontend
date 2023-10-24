@@ -23,6 +23,7 @@ import {
 import { useStore } from "../hooks/useStore";
 import {
   fetchGameData,
+  fetchLevel,
   fetchUserItemMetadata,
   getAllNFTsTotalSupplyItemURI,
 } from "../utils/functionCall";
@@ -43,6 +44,7 @@ const Game = () => {
     setData,
     setNFTData,
     setAllNFTsData,
+    setLevel,
   ] = useStore((state) => [
     state.menu,
     state.setMenu,
@@ -55,10 +57,23 @@ const Game = () => {
     state.setData,
     state.setNFTData,
     state.setAllNFTsData,
+    state.setLevel,
   ]);
 
   const [loader, setLoader] = useState(false);
   const params = useParams();
+
+  const { enableWeb3, isWeb3Enabled } = useMoralis();
+  useEffect(() => {
+    if (isWeb3Enabled) return;
+
+    if (
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("connected")
+    ) {
+      enableWeb3();
+    }
+  }, []);
 
   // useEffect(() => {
   //   const getGameData = async () => {
@@ -87,7 +102,7 @@ const Game = () => {
       }
     };
     getAllNFTsMinted();
-  }, []);
+  }, [isWeb3Enabled]);
 
   useEffect(() => {
     const fetchItemNFTsData = async () => {
@@ -103,7 +118,7 @@ const Game = () => {
       }
     };
     fetchItemNFTsData();
-  }, []);
+  }, [isWeb3Enabled]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,19 +130,25 @@ const Game = () => {
       setData(res.data);
     };
     fetchData();
-  }, []);
+  }, [isWeb3Enabled]);
 
-  const { enableWeb3, isWeb3Enabled } = useMoralis();
   useEffect(() => {
-    if (isWeb3Enabled) return;
+    getLevelcompleted();
+  }, [isWeb3Enabled]);
 
-    if (
-      typeof window !== "undefined" &&
-      window.localStorage.getItem("connected")
-    ) {
-      enableWeb3();
+  const getLevelcompleted = async () => {
+    if (isWeb3Enabled) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        setLevel(await fetchLevel(signer));
+        setLoader(false);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, []);
+  };
 
   return (
     <div className="game-app">

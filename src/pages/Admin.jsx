@@ -17,14 +17,14 @@ const Admin = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
-    await createNewItem(signer, 5, "flower3", "FLW3", "flower3");
+    await createNewItem(signer, 5, "flower4", "FLW4", "flower4");
   };
 
   const listonMarket = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
-    await listItem(signer, 2, 10);
+    await listItem(signer, 4, 10);
   };
 
   const purchase = async () => {
@@ -52,8 +52,10 @@ const Admin = () => {
   const getAllNFTsMinted = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
+    console.log("hello");
     const signer = await provider.getSigner();
-    await getAllNFTsTotalSupplyItemURI(signer);
+    const res = await getAllNFTsTotalSupplyItemURI(signer);
+    console.log(res);
   };
 
   const mintLevelNFT = async () => {

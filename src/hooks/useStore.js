@@ -6,6 +6,7 @@ import {
   treesCoordinates,
 } from "../assets/preData";
 import { imgData } from "../images/Items";
+import { dataLevel } from "../assets/dataLevel";
 
 const getlocalStorage = (key) => JSON.parse(window.localStorage.getItem(key));
 const setLocalStorage = (key, value) =>
@@ -76,15 +77,7 @@ export const useStore = create((set) => ({
     set(() => ({ switchModal: toggle }));
   },
   targetCubes: [
-    {
-      key: "ZQJQ53tYfVjXBp9x60sjX",
-      pos: [
-        5,
-        0,
-        3
-      ],
-      texture: "grass"
-    }],
+    ...dataLevel],
   setTargetCubes: (toggle) => {
     set(() => ({ targetCubes: toggle }));
   },

@@ -14,10 +14,11 @@ import {
   landsImg,
   settingIcon,
 } from "../assets";
-import ConnectWallet from "../components/ConnectWallet";
+import { useMoralis } from "react-moralis";
 import { useStore } from "../hooks/useStore";
 
 const Home = () => {
+  const { isWeb3Enabled } = useMoralis();
   const [loader, setLoader] = useState(false);
   const [controlMenu, setControlMenu] = useState(false);
   const [loadGame, setLoadGame] = useState(false);
@@ -43,6 +44,8 @@ const Home = () => {
       try {
         setLoader(true);
         const CID = await createNewWorld(signer, worldName, worldDescription);
+        const _worldList = await fetchGameData(signer);
+        setActiveWorldID(Number(_worldList[1][_worldList[0].length - 1]._hex));
         setTimeout(() => {
           navigate(`/world/${CID}`);
           setLoader(false);
@@ -55,17 +58,19 @@ const Home = () => {
 
   useEffect(() => {
     getLevelcompleted();
-  }, []);
+  }, [isWeb3Enabled]);
 
   const getLevelcompleted = async () => {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      setLevel(await fetchLevel(signer));
-      setLoader(false);
-    } catch (error) {
-      console.log(error);
+    if (isWeb3Enabled) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        setLevel(await fetchLevel(signer));
+        setLoader(false);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -82,6 +87,7 @@ const Home = () => {
       console.log(error);
     }
   };
+  // console.log(worldList);
 
   return (
     <div className="homepage">
@@ -131,7 +137,7 @@ const Home = () => {
             >
               <span>X</span>
             </div>
-            <ul className=" z-100 gameloader-container w-[500px] bg-[#9b9b9bcb] min-h-[300px] bg-[] py-12 card-container make-flex justify-start flex-col gap-3 px-7">
+            <ul className=" z-100 gameloader-container w-[500px] bg-[#9b9b9bcb] min-h-[300px] py-12 card-container make-flex justify-start flex-col gap-3 px-7">
               {worldList && worldList[0].length ? (
                 worldList[0].map(({ name, description, cid }, index) => {
                   return (

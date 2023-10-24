@@ -104,7 +104,7 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="absolute downMenu flex justify-end right-14 bottom-0">
+    <div className="absolute downMenu flex justify-end right-14 bottom-0 text-black">
       {loader && (
         <div
           className="fixed top-0 w-screen h-screen flex justify-center items-center"

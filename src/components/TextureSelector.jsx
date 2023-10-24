@@ -111,7 +111,8 @@ const TextureSelector = () => {
     settings,
     buyMenu,
     infoMenu,
-    toggleSwitch,
+    saveBtn,
+    profileMenu,
   } = useKeyboard();
 
   const [loader, setLoader] = useState(false);
@@ -132,10 +133,13 @@ const TextureSelector = () => {
       settings,
       buyMenu,
       infoMenu,
-      toggleSwitch,
+      saveBtn,
+      profileMenu,
     };
+    console.log(textures);
     const pressedTexture = Object.entries(textures).find(([k, v]) => v);
     if (pressedTexture) {
+      console.log(pressedTexture);
       if (pressedTexture[0] == "chatMenu") {
         setChatBar(!chatBar);
         setActiveConfig(activeConfig == "chatMenu" ? "e" : "chatMenu");
@@ -150,15 +154,15 @@ const TextureSelector = () => {
         setActiveConfig(activeConfig == "shopMenu" ? "e" : "shopMenu");
       } else if (pressedTexture[0] == "infoMenu") {
         setInfoBar(!infoBar);
-        setActiveConfig(activeConfig == "toggleSwitch" ? "e" : "infoMenu");
-      } else if (pressedTexture[0] == "toggleSwitch") {
-        setLevelMode(!levelMode);
+        setActiveConfig(activeConfig == "infoMenu" ? "e" : "infoMenu");
+      } else if (pressedTexture[0] == "profileMenu") {
+        // setLevelMode(!levelMode);
       } else {
         setTexture(pressedTexture[0]);
       }
-      console.log(pressedTexture[0]);
     }
   }, [
+    profileMenu,
     setTexture,
     grass,
     tree,
@@ -170,12 +174,12 @@ const TextureSelector = () => {
     chatMenu,
     inventory,
     settings,
+    saveBtn,
     buyMenu,
     infoMenu,
-    toggleSwitch,
   ]);
 
-  console.log(levelMode);
+  // console.log(levelMode);
 
   const saveGameData = async () => {
     setLoader(true);
@@ -195,20 +199,21 @@ const TextureSelector = () => {
       console.log(error);
     }
   };
-  console.log(cubes);
+
   const verifyLevel = async () => {
     setLoader(true);
-    const res = compare(cubes, targetCubes);
+    const res = compare(cubes, targetCubes[getLevel]);
     console.log(res);
-    setModal(true);
-    if (compare(cubes, targetCubes)) {
+    if (res) {
       setSuccess(true);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = await provider.getSigner();
       await mintLevel(signer);
+      setModal(true);
       setLevel(getLevel + 1);
     } else {
+      setModal(true);
     }
     setLoader(false);
   };
@@ -231,7 +236,12 @@ const TextureSelector = () => {
             </h2>
             {/* <p>🎊🎊🎊</p> */}
             <div className="make-flex gap-3">
-              <button className="btn hover:scale-105">Go to World</button>
+              <button
+                className="btn hover:scale-105"
+                onClick={() => window.location.reload()}
+              >
+                Go to World
+              </button>
               <button
                 className="btn hover:scale-105"
                 onClick={() => {
@@ -239,7 +249,7 @@ const TextureSelector = () => {
                   setSuccess(false);
                 }}
               >
-                Next level
+                Retry
               </button>
             </div>
           </div>
@@ -357,9 +367,20 @@ const TextureSelector = () => {
       >
         <div className="scale-125 hover:scale-110 ">
           {levelMode ? (
-            <img src={globeIcon} onClick={() => setLevelMode(false)} />
+            <img
+              src={globeIcon}
+              onClick={() => {
+                setLevelMode(false);
+                window.location.reload();
+              }}
+            />
           ) : (
-            <img src={levelsIcon} onClick={() => setLevelMode(true)} />
+            <img
+              src={levelsIcon}
+              onClick={() => {
+                setLevelMode(true);
+              }}
+            />
           )}
         </div>
         <ul
@@ -370,13 +391,19 @@ const TextureSelector = () => {
           }}
         >
           {levels.map(({ level, id }) => {
-            console.log(getLevel);
+            // console.log(getLevel);
             return (
               <li
                 className="level-item text-2xl font-vt  hover:scale-105"
                 key={id}
+                // onClick={() => setLevel(1)}
                 style={{
-                  backgroundColor: getLevel >= id ? "#3e9927" : "#7c7c7c",
+                  backgroundColor:
+                    id <= getLevel
+                      ? "#3e9927"
+                      : id == getLevel + 1
+                      ? "#D3C75A"
+                      : "#7c7c7c",
                 }}
               >
                 Level{level}
